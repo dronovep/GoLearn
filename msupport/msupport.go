@@ -1,3 +1,3 @@
 package msupport
 
-var alpha int = 256
+var Alpha int = 256
