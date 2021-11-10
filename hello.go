@@ -20,21 +20,21 @@ type Point struct {
 	y float64
 }
 
-func (this *Point) getLength() float64 {
-	return math.Sqrt(this.x*this.x + this.y*this.y)
+func (o *Point) getLength() float64 {
+	return math.Sqrt(o.x*o.x + o.y*o.y)
 }
 
-func (this *Point) getX() float64 {
-	return this.x
+func (o *Point) getX() float64 {
+	return o.x
 }
 
-func (this *Point) getY() float64 {
-	return this.y
+func (o *Point) getY() float64 {
+	return o.y
 }
 
-func (this *Point) setCoordinates(x float64, y float64) {
-	this.x = x
-	this.y = y
+func (o *Point) setCoordinates(x float64, y float64) {
+	o.x = x
+	o.y = y
 }
 
 func testLength(obj IHaveLength) {
@@ -49,10 +49,43 @@ func testCoordinates(obj IHaveCoordinates) {
 	fmt.Printf("obj coordinates now are: x = %f, y = %f\n", obj.getX(), obj.getY())
 }
 
+// Пример с включением одних интерфейсов в другой
+type ICanGreet interface {
+	greet() string
+}
+
+type ICanBye interface {
+	bye() string
+}
+
+type ICanMeet interface {
+	ICanGreet
+	ICanBye
+}
+
+type Dog struct {
+	name string
+}
+
+func (o *Dog) greet() string {
+	return fmt.Sprintf("Woof!Woof! My name is %s", o.name)
+}
+
+func (o *Dog) bye() string {
+	return fmt.Sprintf("Woof!Bye!")
+}
+
 func main() {
 	p := &(Point{3, 2})
+	var d IHaveCoordinates = &(Point{17, 33})
 	testLength(p)
 	testCoordinates(p)
+	// а вот testLength(d) тут уже не вызвать, так как d был явно указан тип интерфейса, а не Point
+	testCoordinates(d)
+
+	var meeter ICanMeet = &Dog{"Fido"}
+	fmt.Printf("\n\nПриветствие: %s\n", meeter.greet())
+	fmt.Printf("Прощание: %s\n", meeter.bye())
 }
 
 /**
