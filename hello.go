@@ -24,6 +24,14 @@ func main() {
 	printSlice(sl)
 	printSlice(sl2)
 	printSlice(sl3)
+
+	slength := 3
+	sl4 := marr[:slength] // величина слайса может формироваться динамически
+	printSlice(sl4)
+	marr[0] = 256
+	printSlice(sl4)
+
+	//marr2 := [slength]int{}	// тогда как массив может быть объявлен с константным указанием размера
 }
 
 func printSlice(slice []int) {
