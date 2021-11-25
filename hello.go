@@ -20,8 +20,9 @@ func generate_bm() (brand string, model string) {
 	brand = "Kia"
 	model = "Sorento"
 
-	return brand, model
-	//return "Kia", "Sorento"
+	//return
+	//return brand, model
+	return "Volkswagen", "Touareq"
 }
 
 func printStringArgs(args ...string) {
