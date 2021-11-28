@@ -40,42 +40,38 @@ func selectEngine(enginechan chan bool) {
 	fmt.Printf("Engine selected\n")
 }
 
-var d int = 1
+const (
+	motherHello  = iota
+	fatherHello  = iota
+	sisterHello  = iota
+	brotherHello = iota
+	numHello     = iota
+)
 
-func motherHello(mchan chan bool) {
-	<-mchan
-	fmt.Printf("Hello from mother!\n")
-	d++
-	if d == 4 {
-		close(mchan)
-	}
-}
+var start = make(chan bool, numHello)
+var stop = make(chan bool, numHello)
 
-func fatherHello(mchan chan bool) {
-	<-mchan
-	fmt.Printf("Hello from father!\n")
-	d++ // плохой вариант, возможно состояние гонки. все горутины могут одновременно попробовать увеличить d
-	if d == 4 {
-		close(mchan)
-	}
-}
-
-func sisterHello(mchan chan bool) {
-	<-mchan
-	fmt.Printf("Hello from sister!\n")
-	d++
-	if d == 4 {
-		close(mchan)
-	}
-}
-
-func brotherHello(mchan chan bool) {
-	<-mchan
-	fmt.Printf("Hello from brother!\n")
-	d++
-	if d == 4 {
-		close(mchan)
-	}
+var tasks = [numHello]func(start <-chan bool, stop chan<- bool){
+	motherHello: func(start <-chan bool, stop chan<- bool) {
+		<-start
+		fmt.Printf("Hello from mother!\n")
+		stop <- true
+	},
+	fatherHello: func(start <-chan bool, stop chan<- bool) {
+		<-start
+		fmt.Printf("Hello from father!\n")
+		stop <- true
+	},
+	sisterHello: func(start <-chan bool, stop chan<- bool) {
+		<-start
+		fmt.Printf("Hello from sister!\n")
+		stop <- true
+	},
+	brotherHello: func(start <-chan bool, stop chan<- bool) {
+		<-start
+		fmt.Printf("Hello from brother!\n")
+		stop <- true
+	},
 }
 
 func main() {
@@ -97,19 +93,13 @@ func main() {
 	//time.Sleep(3 * time.Second)
 
 	// пример с набором из нескольких горутин-рабочих
-	var mchan = make(chan bool, 4)
-	go motherHello(mchan)
-	go fatherHello(mchan)
-	go sisterHello(mchan)
-	go brotherHello(mchan)
-
-	for i := 0; i < cap(mchan); i++ {
-		mchan <- true
+	for i := 0; i < numHello; i++ {
+		go tasks[i](start, stop)
+		start <- true
 	}
-	mchan <- true
 
-	for result := range mchan {
-		fmt.Printf("Result = %v\n", result)
+	for i := 0; i < numHello; i++ {
+		<-stop
 	}
 }
 
