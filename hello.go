@@ -6,10 +6,11 @@ import (
 )
 
 func main() {
-
+	fmt.Printf("\nНачало работы!\n\n")
 	TestPrintfVformats()
 	TestErrorf()
 	TestFprint()
-
-	fmt.Printf("Работа завершена!\n")
+	TestFprintF()
+	TestFscan()
+	fmt.Printf("\nРабота завершена!\n")
 }

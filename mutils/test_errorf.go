@@ -5,13 +5,13 @@ import (
 	. "octadev.ru/GoLearn/mtypes"
 )
 
-func mcatch() {
+func errorfCatch() {
 	merror := recover().(*TestError)
 	message := fmt.Errorf("Ловим возникшую ошибку - %w\n", merror)
-	fmt.Printf("mcatch: error message: %s\n", message.Error())
+	fmt.Printf("fprintf_catch: error message: %s\n", message.Error())
 }
 
 func TestErrorf() {
-	defer mcatch()
+	defer errorfCatch()
 	panic(&TestError{})
 }
