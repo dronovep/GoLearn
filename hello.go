@@ -27,13 +27,10 @@ func main() {
 
 	window.Show()
 
-	process := CreateMProcess(nameCounterRoutine)
-	process.Start()
 	for event := sdl.WaitEvent(); event.GetType() != sdl.QUIT; event = sdl.WaitEvent() {
 
 	}
-	process.WaitForStop()
-	//process.Stop()
+
 	sdl.Quit()
 	fmt.Printf("Работа завершена\n")
 }
