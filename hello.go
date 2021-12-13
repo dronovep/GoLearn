@@ -12,5 +12,6 @@ func main() {
 	TestFprint()
 	TestFprintF()
 	TestFscan()
+	TestFscanf()
 	fmt.Printf("\nРабота завершена!\n")
 }
