@@ -7,11 +7,12 @@ import (
 
 func main() {
 	fmt.Printf("\nНачало работы!\n\n")
-	TestPrintfVformats()
-	TestErrorf()
-	TestFprint()
-	TestFprintF()
-	TestFscan()
-	TestFscanf()
+	//TestPrintfVformats()
+	//TestErrorf()
+	//TestFprint()
+	//TestFprintF()
+	//TestFscan()
+	//TestFscanf()
+	TestScanInterface()
 	fmt.Printf("\nРабота завершена!\n")
 }
