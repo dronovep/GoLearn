@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/veandco/go-sdl2/sdl"
+	vk "github.com/vulkan-go/vulkan"
 	. "octadev.ru/GoLearn/parallel"
 )
 
@@ -26,6 +27,15 @@ func main() {
 	}
 
 	window.Show()
+
+	err := vk.SetDefaultGetInstanceProcAddr()
+	if err != nil {
+		fmt.Printf("%s\n", err.Error())
+	}
+	err = vk.Init()
+	if err != nil {
+		fmt.Printf("%s\n", err.Error())
+	}
 
 	for event := sdl.WaitEvent(); event.GetType() != sdl.QUIT; event = sdl.WaitEvent() {
 
