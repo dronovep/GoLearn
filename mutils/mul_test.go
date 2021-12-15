@@ -51,3 +51,11 @@ func TestMul2(t *testing.T) {
 	t.Run("second", tstsecond)
 	t.Run("third", tstthird)
 }
+
+// По умолчанию go test выполнит напрямую все тесты
+// Но если хочется, чтобы тест пакета выполнялся как-то по особенному, можно сделать в пакете функцию TestMain(m *testing.M)
+// например для вынесения setups и teardowns
+// TestMain всегда выполняется в main goroutine
+func TestMain(m *testing.M) {
+	m.Run()
+}
