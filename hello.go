@@ -21,13 +21,14 @@ func main() {
 	fmt.Printf("\nНачало работы\n")
 	sdl.Init(sdl.INIT_EVERYTHING)
 
-	window, err = sdl.CreateWindow("Go window", 500, 250, 800, 600, 0)
+	window, err = sdl.CreateWindow("Go window", 500, 250, 800, 600, sdl.WINDOW_VULKAN)
 	if err != nil {
 		fmt.Printf("%s\n", err.Error())
 	}
 
 	window.Show()
 
+	vk.SetGetInstanceProcAddr(sdl.VulkanGetVkGetInstanceProcAddr())
 	err := vk.SetDefaultGetInstanceProcAddr()
 	if err != nil {
 		fmt.Printf("%s\n", err.Error())
