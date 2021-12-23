@@ -36,7 +36,7 @@ func main() {
 }
 
 func BenchmarkStandardSetCoords(t *testing.B) {
-	p := Point{0, 0, standardSetCoords}
+	p := Point{0, 0, StandardSetCoords}
 	t.ResetTimer()
 	for i := 0; i < t.N; i++ {
 		for i := 0; i < 100; i++ {
